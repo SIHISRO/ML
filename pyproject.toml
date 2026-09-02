@@ -1,0 +1,18 @@
+[project]
+name = "isro"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+	"fastapi",
+	"uvicorn",
+	"python-multipart",
+	"opencv-python",
+	"numpy",
+	"torch",
+	"torchvision",
+	"mlflow",
+	"pandas",
+	"tqdm",
+]
