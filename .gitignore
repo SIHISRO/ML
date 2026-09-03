@@ -28,3 +28,7 @@ preprocessed_data/
 # Environment variables
 *.env
 .env
+
+# Local Documentation (removed from Git)
+ml_review.md
+backend_to_ml_confirmation.md
