@@ -6,16 +6,25 @@ dist/
 wheels/
 *.egg-info
 
-# Virtual environments
+# Virtual environments and package managers
 .venv
+.uv/
 
-
+# Data and temporary outputs
+data/
+temp/
 artifacts/
+preprocessed_data/
 
+# Model files
 *.pkl
 *.pth
 
-
-*.env
-
+# Images (input/output)
 *.png
+*.jpg
+*.jpeg
+
+# Environment variables
+*.env
+.env
