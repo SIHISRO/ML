@@ -9,7 +9,7 @@ import numpy as np
 class PredictionPipeline:
     def __init__(self, model_prediction_config: Model_prediction_config):
         self.model_prediction_config = model_prediction_config
-        self.model_prediction_service = Model_prediction(model_prediction_config=model_prediction_config)
+        # self.model_prediction_service = Model_prediction(model_prediction_config=model_prediction_config)
         self.model = LoFTR(pretrained="outdoor")
         repo_id = "VashuTheGreat2/lunar-loftr-registration"
 
