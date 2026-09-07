@@ -20,7 +20,14 @@ jobs:
         run: sudo docker pull "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
 
       - name: Delete Old docker container
-        run: sudo docker rm -f "${DOCKER_IMAGE_NAME}-container" || true
+        run: |
+          sudo docker rm -f "sih_isro-container" || true
+          sudo docker network inspect "sih_isro" >/dev/null 2>&1 || sudo docker network create "sih_isro"
 
       - name: Run Docker Container
-        run: sudo docker run -d -p 8000:8000 --name "${DOCKER_IMAGE_NAME}-container" "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
+        run: |
+          sudo docker run -d \
+            --name "sih_isro-container" \
+            --network "sih_isro" \
+            -p 8000:8000 \
+            "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
