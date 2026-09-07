@@ -3,13 +3,12 @@ name: CD Pipeline
 on:
   workflow_run:
     workflows: ["CI Pipeline"]
-    types:
-      - completed
+    types: [completed]
+  workflow_dispatch:
 
 jobs:
-
-  build:
-
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     runs-on: self-hosted
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -17,9 +16,11 @@ jobs:
       DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
 
     steps:
-    - name: Pull Docker image
-      run: sudo docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
-    - name: Delete Old docker container
-      run: sudo docker rm -f $DOCKER_IMAGE_NAME-container || true
-    - name: Run Docker Container
-      run: sudo docker run -d -p 8000:8000 --name $DOCKER_IMAGE_NAME-container $DOCKER_USERNAME/$DOCKER_IMAGE_NAME
+      - name: Pull Docker image
+        run: sudo docker pull "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
+
+      - name: Delete Old docker container
+        run: sudo docker rm -f "${DOCKER_IMAGE_NAME}-container" || true
+
+      - name: Run Docker Container
+        run: sudo docker run -d -p 8000:8000 --name "${DOCKER_IMAGE_NAME}-container" "${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
